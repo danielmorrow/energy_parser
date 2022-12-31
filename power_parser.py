@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 """Take usage data .csv file from SCE, parse it, and analyze it"""
 import sys
 import os
@@ -9,13 +9,13 @@ from power_plotting import PowerPlotting
 def print_usage(error_string=""):
     """Print usage in the case of bad inputs"""
     script_name = os.path.basename(__file__)
-    print "=========================="
+    print("==========================")
     if error_string:
-        print "Error: "
-        print "\t " + error_string
-    print "Usage: "
-    print "\t" + script_name + " /path/to/usage.csv"
-    print "=========================="
+        print("Error: ")
+        print("\t " + error_string)
+    print("Usage: ")
+    print("\t" + script_name + " /path/to/usage.csv")
+    print("==========================")
     raise ValueError("Incorrect Parameters")
 
 def verify_inputs(args):
@@ -32,9 +32,9 @@ def verify_inputs(args):
 
 def convert_date_dict_to_datetime(date_dict):
     """Take in a dictionary and return datetime"""
-    return datetime.datetime(int(date_dict['year']), int(date_dict['month']), \
-        int(date_dict['day']), int(date_dict['hour']), \
-        int(date_dict['minute']), int(date_dict['second']))
+    return datetime.datetime(int(date_dict['year']), int(date_dict['month']),
+                             int(date_dict['day']), int(date_dict['hour']),
+                             int(date_dict['minute']), int(date_dict['second']))
 
 def get_dates_from_line(csv_line):
     """Take in CSV line. If it is a line that contains two dates, extract and return them"""
@@ -53,7 +53,7 @@ def parse_csv_file(csv_path):
     """Read in a CSV file and return the data"""
     # This is only a CSV in that it's values are separted by commas.
     # There is a lot of non-tabular data in this file.
-    print "Parsing " + csv_path
+    print("Parsing " + csv_path)
     consumption_data = []
     with open(csv_path) as csv_file_handle:
         for line in csv_file_handle:
@@ -70,7 +70,7 @@ def parse_csv_file(csv_path):
 
 def main(args):
     """Main function. Takes a list of csv filenames/paths"""
-    print "Starting"
+    print("Starting")
     verify_inputs(args)
 
     parsed_files = []

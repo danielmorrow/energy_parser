@@ -23,7 +23,7 @@ class PowerPlotting(object):
             else:
                 raise ValueError("No usage data provided")
 
-        print "Generating Hourly Usage Data"
+        print("Generating Hourly Usage Data")
         hours = [[] for _ in range(24)] #Initialize list by hours in a week
         for sample in data_to_use:
             #Count only the days we are susposed to
@@ -57,7 +57,7 @@ class PowerPlotting(object):
             else:
                 raise ValueError("No usage data provided")
 
-        print "Generating Weekly Usage Data"
+        print("Generating Weekly Usage Data")
         #Get the week number for the first sample.
         last_week = data_to_use[0]['time'].isocalendar()[1]
         #Initialize first week with time and empty usage
@@ -73,8 +73,8 @@ class PowerPlotting(object):
             #Update current week index
             last_week = current_week
         times, values = PowerPlotting.get_data_to_plot(weekly_data)
-        PowerPlotting.__bar_chart(times, values, \
-            title='Weekly Usage', x_label='Usage for week of', y_label='Weekly Power Usage (kWh)')
+        PowerPlotting.__bar_chart(times, values,
+                                  title='Weekly Usage', x_label='Usage for week of', y_label='Weekly Power Usage (kWh)')
 
     def plot_usage_per_week_day(self, usage_data=None):
         """Split data into usage per week day"""
@@ -86,7 +86,7 @@ class PowerPlotting(object):
             else:
                 raise ValueError("No usage data provided")
 
-        print "Generating Usage Per Week Data"
+        print("Generating Usage Per Week Data")
         week_name_labels = list(calendar.day_name)
         days_per_week = len(week_name_labels) #helper variable
         week_days = [[] for _ in range(days_per_week)] #Initialize list by days in a week
@@ -105,7 +105,7 @@ class PowerPlotting(object):
             else:
                 raise ValueError("No usage data provided")
 
-        print "Generating Plots for All Data"
+        print("Generating Plots for All Data")
         times, values = PowerPlotting.get_data_to_plot(data_to_use)
         PowerPlotting.__scatter_plot(times, values)
 
