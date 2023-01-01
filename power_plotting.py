@@ -2,6 +2,7 @@
 import calendar
 import matplotlib.pyplot as plt
 
+
 class PowerPlotting(object):
     """Class for handling plotting of power data"""
 
@@ -24,11 +25,11 @@ class PowerPlotting(object):
                 raise ValueError("No usage data provided")
 
         print("Generating Hourly Usage Data")
-        hours = [[] for _ in range(24)] #Initialize list by hours in a week
+        hours = [[] for _ in range(24)]  # Initialize list by hours in a week
         for sample in data_to_use:
-            #Count only the days we are susposed to
+            # Count only the days we are supposed to
             if not valid_days:
-                #If no list is provided, count all days
+                # If no list is provided, count all days
                 hours[sample['time'].hour].append(sample['value'])
             elif sample['time'].weekday() in valid_days:
                 hours[sample['time'].hour].append(sample['value'])
@@ -48,7 +49,7 @@ class PowerPlotting(object):
         PowerPlotting.__bot_plot(hours, labels, title=title)
 
     def plot_weekly_usage(self, usage_data=None):
-        """Plot cummulative weekly usage data"""
+        """Plot cumulative weekly usage data"""
         if usage_data:
             data_to_use = usage_data
         else:
@@ -58,19 +59,19 @@ class PowerPlotting(object):
                 raise ValueError("No usage data provided")
 
         print("Generating Weekly Usage Data")
-        #Get the week number for the first sample.
+        # Get the week number for the first sample.
         last_week = data_to_use[0]['time'].isocalendar()[1]
-        #Initialize first week with time and empty usage
+        # Initialize first week with time and empty usage
         weekly_data = [{'time': data_to_use[0]['time'], 'value': 0}]
         for sample in data_to_use:
             current_week = sample['time'].isocalendar()[1]
             if last_week != current_week:
                 weekly_data.append({'time': sample['time'], 'value': sample['value']})
             else:
-                #Within this week, add this sample's usage value
+                # Within this week, add this sample's usage value
                 weekly_data[-1]['value'] += sample['value']
 
-            #Update current week index
+            # Update current week index
             last_week = current_week
         times, values = PowerPlotting.get_data_to_plot(weekly_data)
         PowerPlotting.__bar_chart(times, values,
@@ -88,8 +89,8 @@ class PowerPlotting(object):
 
         print("Generating Usage Per Week Data")
         week_name_labels = list(calendar.day_name)
-        days_per_week = len(week_name_labels) #helper variable
-        week_days = [[] for _ in range(days_per_week)] #Initialize list by days in a week
+        days_per_week = len(week_name_labels)  # helper variable
+        week_days = [[] for _ in range(days_per_week)]  # Initialize list by days in a week
         for sample in data_to_use:
             week_days[sample['time'].weekday()].append(sample['value'])
 
@@ -145,7 +146,8 @@ class PowerPlotting(object):
         if x_label:
             plt.xlabel(x_label)
 
-    def show_plots(self):
+    @staticmethod
+    def show_plots():
         """Draw all plots"""
         plt.show()
 
